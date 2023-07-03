@@ -1,0 +1,1 @@
+void vivod (char ch);

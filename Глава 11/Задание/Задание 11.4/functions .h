@@ -1,0 +1,1 @@
+char * str_reserh (char * const str, char simvol);
