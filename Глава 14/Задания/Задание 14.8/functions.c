@@ -29,8 +29,8 @@ void initializing(struct colossus_airlines * air_plase)
 {
     for (int i = 0; i < PLACE; i++)
     {
-        strcpy (air_plase[i].lastname, "Не занято");
-        strcpy (air_plase[i].name, "Не занято");
+        strcpy (air_plase[i].lastname, "No");
+        strcpy (air_plase[i].name, "No");
         air_plase[i].nomber_place = i + 1;
         air_plase[i].flag_reserv = false;
     }
@@ -58,7 +58,7 @@ void fre_plase (struct colossus_airlines * air_plase)
     static int flag_fre_plase;
     
     for (int i = 0; i < PLACE; i++)
-        if (strcmp (air_plase[i].lastname, "Не занято") == 0)
+        if (strcmp (air_plase[i].lastname, "No") == 0)
             flag_fre_plase++;
     
     printf ("Свободных мест: %d\n", flag_fre_plase + 1);
@@ -68,7 +68,7 @@ void fre_plase_lest (struct colossus_airlines * air_plase)
 {
     printf ("Фамиля         Имя      Место Бронь\n");
     for (int i = 0; i < 12; i++)
-        if (strcmp (air_plase[i].lastname, "Не занято") == 0)
+        if (strcmp (air_plase[i].lastname, "No") == 0)
             printf ("%s | %3s | %3d | %3d\n", air_plase[i].lastname, air_plase[i].name, air_plase[i].nomber_place, air_plase[i].flag_reserv);
 }
 
@@ -106,8 +106,8 @@ void del_a_loc (struct colossus_airlines * air_plase)
     
     if (number <= PLACE && OK_CODE < number)
     {
-        strcpy (air_plase[number - 1].lastname, "Не занято");
-        strcpy (air_plase[number - 1].name, "Не занято");
+        strcpy (air_plase[number - 1].lastname, "No");
+        strcpy (air_plase[number - 1].name, "No");
         air_plase[number - 1].flag_reserv = false;
     }
     else 
@@ -126,10 +126,26 @@ void sort (struct colossus_airlines * air_plase)
                 air_plase[j] = air_plase[j + 1];
                 air_plase[j + 1] = bufer_struct;
             }
-    
-    printf ("Фамиля         Имя      Место Бронь\n");
-        for (int i = 0; i < 12; i++)
-            if (strcmp (air_plase[i].lastname, "Не занято") != 0)
-                printf ("%s * %3s * %3d * %3d\n", air_plase[i].lastname, air_plase[i].name, air_plase[i].nomber_place, air_plase[i].flag_reserv);
+}
 
+void save_data_file (struct colossus_airlines * air_plase, FILE * fp)
+{
+    int size = sizeof (struct colossus_airlines);
+    rewind (fp);
+    fwrite (&air_plase [OK_CODE], size, PLACE, fp);
+    
+    for (int i = 0; i < PLACE; i++)
+        air_plase[i].nomber_place = i + 1;
+}
+
+void dowlnd_data_file (struct colossus_airlines * air_plase, FILE * fp)
+{
+    
+    rewind (fp);
+    int size = sizeof (struct colossus_airlines);
+    for (int i = 0; i < PLACE; i++)
+        fread (&air_plase [i], size, 1, fp);
+
+    
+    rewind (fp);
 }

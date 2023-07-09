@@ -9,10 +9,14 @@ int main (void)
     auto char flag_menu;
     
     
-    fp = opne_file ();
+    
+    fp =  fopen ("Colossus_Airlines.dat", "r + b");//= opne_file ();
+    rewind (fp);
     if(fscanf (fp, "%s", air_plase[OK_CODE].lastname) < 0)
         initializing (air_plase);
-    rewind (fp);
+    else
+        dowlnd_data_file (air_plase, fp);
+    
     
     while (ONE_FLAG)
     {
@@ -36,13 +40,10 @@ int main (void)
                 del_a_loc (air_plase);
                 break;
             case 'f':
+                save_data_file (air_plase, fp);
                 exit (OK_CODE);
         }
     }
-    
-    //printf ("Фамиля         Имя      Место Бронь\n");
-    //for (int i = 0; i < 12; i++)
-    //    printf ("%s * %3s * %3d * %3d\n", air_plase[i].lastname, air_plase[i].name, air_plase[i].nomber_place, air_plase[i].flag_reserv);
-
+    fclose (fp);
     return OK_CODE;
 }
