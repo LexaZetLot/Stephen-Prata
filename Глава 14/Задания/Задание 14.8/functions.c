@@ -61,7 +61,7 @@ void fre_plase (struct colossus_airlines * air_plase)
         if (strcmp (air_plase[i].lastname, "No") == 0)
             flag_fre_plase++;
     
-    printf ("Свободных мест: %d\n", flag_fre_plase + 1);
+    printf ("Свободных мест: %d\n", flag_fre_plase);
 }
 
 void fre_plase_lest (struct colossus_airlines * air_plase)
@@ -126,6 +126,11 @@ void sort (struct colossus_airlines * air_plase)
                 air_plase[j] = air_plase[j + 1];
                 air_plase[j + 1] = bufer_struct;
             }
+
+    printf ("Фамиля         Имя      Место Бронь\n");
+    for (int i = 0; i < 12; i++)
+        if (strcmp (air_plase[i].lastname, "No") == 0)
+            printf ("%s | %3s | %3d | %3d\n", air_plase[i].lastname, air_plase[i].name, air_plase[i].nomber_place, air_plase[i].flag_reserv);
 }
 
 void save_data_file (struct colossus_airlines * air_plase, FILE * fp)
@@ -133,9 +138,6 @@ void save_data_file (struct colossus_airlines * air_plase, FILE * fp)
     int size = sizeof (struct colossus_airlines);
     rewind (fp);
     fwrite (&air_plase [OK_CODE], size, PLACE, fp);
-    
-    for (int i = 0; i < PLACE; i++)
-        air_plase[i].nomber_place = i + 1;
 }
 
 void dowlnd_data_file (struct colossus_airlines * air_plase, FILE * fp)
