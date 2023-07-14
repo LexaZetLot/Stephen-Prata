@@ -1,0 +1,16 @@
+#define MASK_FONT 0xFF
+#define MASK_SIZE_FONT 0x7F00
+#define MASK_ALIGMENT 0x18000
+#define MASK_BOLD 0x20000
+#define MASK_ITALICS 0x40000
+#define MASK_EMPHASIZED 0x80000
+#define REV_MASK_FONT 0xFFFFFF00
+#define REV_MASK_SIZE_FONT 0xFFFF80FF
+#define REV_MASK_MASK_ALIGMENT 0xFFFE7FFF
+#define REV_MASK_MASK_BOLD 0xFFFDFFFF
+#define REV_MASK_MASK_ITALICS 0xFFFBFFFF
+#define REV_MASK_MASK_EMPHASIZED 0xFFF7FFFF
+
+void print (unsigned int x);
+void menu_setap (unsigned int * x);
+void skip ();
