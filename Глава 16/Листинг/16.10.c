@@ -1,0 +1,22 @@
+//names_st.h -- защита от многократного включения
+
+#ifndef NAМES_Н_
+#define NAМES_Н_
+
+//константы
+#define SLEN 32
+
+//объявления структур
+struct names_st
+{
+    char first [SLEN];
+    char last [SLEN];
+};
+
+//определения типов
+typedef struct names_st names;
+
+//прототипы функций
+void get_names (names *);
+void show_names (const names *);
+#endif 
