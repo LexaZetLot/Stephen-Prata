@@ -1,0 +1,1 @@
+#define MED_HAR(X, Y) ~(((~X) + (~Y)) / 2)

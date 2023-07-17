@@ -1,0 +1,11 @@
+#include <stdio.h>
+#define PR_DATE
+
+int main (void)
+{
+    #ifdef PR_DATE
+        printf ("%s", __DATE__);
+    #endif
+    
+    return 0;
+}

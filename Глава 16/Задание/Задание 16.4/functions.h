@@ -1,0 +1,1 @@
+int time_run (double time_bufer);
