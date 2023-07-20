@@ -22,6 +22,30 @@ typedef struct node
 }Node;
 
 typedef struct tree
+/*tree.h -- дерево бинарного поиска                                             */
+/*в этом дереве никакие дублированные элементы не допускаются                   */
+
+#ifndef _TREE_Н
+#define _TREE_Н
+#include <stdbool.h>
+
+/*переопределение типа Item                                                     */
+typedef struct item 
+{
+    char petname [20];
+    char petkind [20];
+}Item;
+
+#define МAXITEMS 10
+
+typedef struct node
+{
+    Item item;
+    struct node * left;   /*указатель на левую ветвь                            */ 
+    struct node * right;  /*указатель на правую ветвь                           */
+}Node;
+
+typedef struct tree
 {
     Node * root;          /*указатель на корень дерева                          */ 
     int size;             /*количеcтво элементов в дереве                       */
@@ -81,7 +105,7 @@ bool DeleteItem (const Item * pi, Tree * ptree);
 /*                        значения                                              */
 /*конечные условия:       функция, указанная pfun, выполняется один раз для     */
 /*                        каждого элемента в дереве                             */
-void Traverse (const Tree * ptree, void (* pfun) (ItemItem));
+void Traverse (const Tree * ptree, void (* pfun) (Item item));
 
 /*операция:               удаление всех элементов из дерева                     */
 /*начальные условия:      ptree указывает на инициализированное дерево          */
