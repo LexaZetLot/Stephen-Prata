@@ -1,26 +1,3 @@
-/*tree.h -- дерево бинарного поиска                                             */
-/*в этом дереве никакие дублированные элементы не допускаются                   */
-
-#ifndef _TREE_Н
-#define _TREE_Н
-#include <stdbool.h>
-
-/*переопределение типа Item                                                     */
-typedef struct item 
-{
-    char petname [20];
-    char petkind [20];
-}Item;
-
-#define МAXITEMS 10
-
-typedef struct node
-{
-    Item item;
-    struct node * left;   /*указатель на левую ветвь                            */ 
-    struct node * right;  /*указатель на правую ветвь                           */
-}Node;
-
 typedef struct tree
 /*tree.h -- дерево бинарного поиска                                             */
 /*в этом дереве никакие дублированные элементы не допускаются                   */
