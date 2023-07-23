@@ -9,7 +9,7 @@
 typedef struct item 
 {
     char petname [20];
-    char petkind [20];
+    int reps;
 }Item;
 
 #define МAXITEMS 10
