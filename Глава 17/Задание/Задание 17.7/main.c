@@ -7,9 +7,8 @@
 
 char menu (void);
 bool addpet (Tree * pt, FILE * fp);
-void droppet (Tree * pt);
-void showpets (const Tree * pt);
-void findpet (const Tree * pt);
+void showpets (Tree * pt);
+void findpet (Tree * pt);
 void printitem (Item item);
 void uppercase (char * str);
 
@@ -21,14 +20,12 @@ int main (void)
     
     pt = fopen ("file.txt", "r");
     
+    if (false)
+        printf ("sadasd\n");
+    
     InitializeTree (&pets);
-    //while (3)
-        addpet (&pets, pt);
-        addpet (&pets, pt);
-        addpet (&pets, pt);
-        addpet (&pets, pt);
-        addpet (&pets, pt);
-        addpet (&pets, pt);
+    while (addpet (&pets, pt)){}
+
     while ((choice = menu ()) != 'q')
     {
         switch (choice)
@@ -37,7 +34,7 @@ int main (void)
                 showpets (&pets);
                 break;
             case 'l': 
-                //showpets (&pets);
+                findpet (&pets);
                 break;
             case 'f': 
                 exit (1);
@@ -80,25 +77,23 @@ char menu (void)
 bool addpet (Tree * pt, FILE * fp)
 {
     Item temp;
+    int buf = 0;
     
     if (TreeIsFull (pt))
         puts ("В дереве кончилось место");
-    else
+    if (fscanf (fp, "%s", temp.petname) > 0)
     {
-        fscanf (fp, "%s", temp.petname);
-        //if (temp.petname [0] != '\0');
-        //{
-            uppercase (temp.petname);
-            temp.reps = 1;
-            AddItem (&temp, pt);
-        //    return true;
-        //}
+        
+        uppercase (temp.petname);
+        temp.reps = 1;
+        AddItem (&temp, pt);
+        return 1;
     }
     
-    //return false;
+    return 0;
 }
 
-void showpets (const Tree * pt)
+void showpets ( Tree * pt)
 {
     if (TreeIsEmpty (pt))
         puts ("Записи отсутствуют!");
@@ -111,54 +106,27 @@ void printitem (Item item)
     printf ("Слово: %-19s Количество: %-19d\n", item.petname, item.reps);
 }
 
-//void findpet (const Tree * pt)
-//{
-//    Item temp;
-//    
-//    if (TreeIsEmpty (pt))
-//    {
-//        puts ("Записи отсутствуют!");
-//        return;                                                                  /*если дерево пусто, выход из функции*/
-//    }
-//    
-//    puts ("Пожалуйста, введите кличку животного, которое хотите найти: ");
-//    gets (temp.petname);
-//    puts ("Teпepь введите вид животного: ");
-//    gets (temp.petkind);
-//    uppercase (temp.petname);
-//    uppercase (temp.petkind);
-//    printf ("%s животное %s", temp.petname, temp.petkind);
-//    
-//    if (InTree (&temp, pt))
-//        printf ("является элементом клуба.\n");
-//    else
-//        printf ("нe является элементом клуба.\n");
-//}
+void findpet ( Tree * pt)
+{
+    Item temp;
+    
+    if (TreeIsEmpty (pt))
+    {
+        puts ("Записи отсутствуют!");
+        return;                                                                  /*если дерево пусто, выход из функции*/
+    }
+    
+    puts ("Пожалуйста, введите слово: ");
+    gets (temp.petname);
+    
+    uppercase (temp.petname);
+    
+    if (InTree (&temp, pt))
+        printf ("является элементом клуба.\n");
+    else
+        printf ("нe является элементом клуба.\n");
+}
 
-//void droppet (Tree * pt) 
-//{
-//    Item temp;
-//    
-//    if (TreeIsEmpty (pt))
-//    {
-//        puts ("Записи отсутствуют!");
-//        return;                                                                  /*если дерево пусто, выход из функции*/
-//    }
-//    
-//    puts ("Пожалуйста, введите кличку животного, которое нужно исключить из клуба: ");
-//    gets (temp.petname);
-//    puts ( "Teпepь введите вид животного: " );
-//    gets (temp.petkind);
-//    uppercase (temp.petname);
-//    uppercase (temp.petkind);
-//    printf ("%s животное %s", temp. petname, temp.petkind);
-//    
-//    if (DeleteItem (&temp, pt))
-//        printf ("исключено из клуба.\n");
-//    else
-//        printf ("нe является членом клуба.\n"); 
-//}
-//
 void uppercase (char * str)
 {
     while (*str)
@@ -166,4 +134,4 @@ void uppercase (char * str)
         *str = toupper (*str);
         str++; 
     }
-}//
+}

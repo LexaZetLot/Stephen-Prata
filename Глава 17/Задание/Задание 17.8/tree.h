@@ -4,15 +4,15 @@
 #ifndef _TREE_Н
 #define _TREE_Н
 #include <stdbool.h>
-
+#define МAXITEMS 10
 /*переопределение типа Item                                                     */
 typedef struct item 
 {
     char petname [20];
-    int reps;
+    char petkind [МAXITEMS][20];
 }Item;
 
-#define МAXITEMS 10
+
 
 typedef struct node
 {
@@ -38,18 +38,18 @@ void InitializeTree (Tree * ptree);
 /*начальные условия:      ptree указывает на дерево                             */
 /*конечные условия:       функция возвращает значение true, если дерево пусто,  */
 /*                        и false - в противном случае                          */
-bool TreeIsEmpty ( Tree * ptree);
+bool TreeIsEmpty (const Tree * ptree);
 
 /*операция:               определение того, является ли дерево полным           */
 /*начальные условия:      ptree указывает на дерево                             */
 /*конечные условия:       функция возвращает значение true, если дерево полно,  */
 /*                        и false - в противном случае                          */
-bool TreeIsFull ( Tree * ptree);
+bool TreeIsFull (const Tree * ptree);
 
 /*операция:               определение количества элементов в дереве             */
 /*начальные условия:      ptree указывает на дерево                             */
 /*конечные условия:       функция возвращает число элементов в дереве           */
-int TreeItemCount ( Tree * ptree);
+int TreeItemCount (const Tree * ptree);
 
 /*операция:               добавление элемента в дерево                          */
 /*начальные условия:      pi - адрес добавляемого элемента ptree указывает на   */
@@ -57,7 +57,7 @@ int TreeItemCount ( Tree * ptree);
 /*конечные условия:       если возможно, функция добавляет элемент в дерево и   */
 /*                        и возвращает значение true; в противном случае она    */
 /*                        возвращает значение false                             */
-bool AddItem ( Item * pi, Tree * ptree);
+bool AddItem (const Item * pi, Tree * ptree);
 
 /*операция:               поиск элемента в дереве                               */
 /*начальные условия:      pi - адрес добавляемого элемента ptree указывает на   */
@@ -65,7 +65,7 @@ bool AddItem ( Item * pi, Tree * ptree);
 /*конечные условия:       функция возвращает значение true, если элемент        */
 /*                        присутствует в дереве, и значение false - в противном */
 /*                        случае                                                */
-bool InTree ( Item * pi,  Tree * ptree);
+bool InTree (const Item * pi, const Tree * ptree);
 
 /*операция:               удаление элемента из дерева                           */
 /*начальные условия:      pi - адрес добавляемого элемента ptree указывает на   */
@@ -73,7 +73,7 @@ bool InTree ( Item * pi,  Tree * ptree);
 /*конечные условия:       если возможно, функция удаляет элемент из дерева и    */
 /*                        возвращает значение true; в противном случае функция  */
 /*                        возвращает значение false                             */
-bool DeleteItem ( Item * pi, Tree * ptree);
+bool DeleteItem (const Item * pi, Tree * ptree);
 
 /*операция:               применение функции к каждому элементу в дерев         */
 /*начальные условия:      ptree указывает на pfun указывает на функцию, которая */
@@ -81,7 +81,7 @@ bool DeleteItem ( Item * pi, Tree * ptree);
 /*                        значения                                              */
 /*конечные условия:       функция, указанная pfun, выполняется один раз для     */
 /*                        каждого элемента в дереве                             */
-void Traverse ( Tree * ptree, void (* pfun) (Item item));
+void Traverse (const Tree * ptree, void (* pfun) (Item item));
 
 /*операция:               удаление всех элементов из дерева                     */
 /*начальные условия:      ptree указывает на инициализированное дерево          */

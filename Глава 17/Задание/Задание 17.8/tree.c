@@ -12,12 +12,12 @@ typedef struct pair
 }Pair;
 
 /*прототипы локальных функций*/
-static Node * MakeNode (Item * pi);
-static bool ToLeft (Item * i1, Item * i2);
-static bool ToRight (Item * i1, Item * i2, int x);
+static Node * MakeNode (const Item * pi);
+static bool ToLeft (const Item * i1, const Item * i2);
+static bool ToRight (const Item * i1, const Item * i2);
 static void AddNode (Node * new_node, Node * root);
-static void InOrder ( Node * root, void (* pfun) (Item item));
-static Pair SeekItem (Item * pi, Tree * ptree, int x);
+static void InOrder (const Node * root, void (* pfun) (Item item));
+static Pair SeekItem (const Item * pi, const Tree * ptree);
 static void DeleteNode (Node **ptr);
 static void DeleteAllNodes (Node * ptr);
 
@@ -28,7 +28,7 @@ void InitializeTree (Tree * ptree)
     ptree -> size = 0;
 }
 
-bool TreeIsEmpty (Tree * ptree)
+bool TreeIsEmpty (const Tree * ptree)
 {
     if (ptree -> root == NULL)
         return true;
@@ -36,7 +36,7 @@ bool TreeIsEmpty (Tree * ptree)
         return false;
 }
 
-bool TreeIsFull ( Tree * ptree)
+bool TreeIsFull (const Tree * ptree)
 {
     if (ptree -> size == МAXITEMS)
         return true;
@@ -44,14 +44,15 @@ bool TreeIsFull ( Tree * ptree)
         return false; 
 }
 
-int TreeItemCount ( Tree * ptree)
+int TreeItemCount (const Tree * ptree)
 {
     return ptree -> size;
 }
 
-bool AddItem ( Item * pi, Tree * ptree)
+bool AddItem (const Item * pi, Tree * ptree)
 {
     Node * new_node;
+    int i = 0;
     
     if (TreeIsFull (ptree))
     {
@@ -59,10 +60,18 @@ bool AddItem ( Item * pi, Tree * ptree)
         fprintf (stderr, "Дepeвo полно\n");
         return false;                                                           /*преждевременный возврат*/
     }
-    if (SeekItem (pi, ptree, 1).child != NULL)
+    
+    if (SeekItem (pi, ptree).child != NULL)
     {
-        
-
+        for (int i = 0; i < МAXITEMS; i++) 
+        {
+            if (ptree -> root -> item.petkind[i][0] == '\0')
+            {
+                strcpy (ptree -> root -> item.petkind[i], pi->petkind[0]);
+                break;
+            }
+        }
+        fprintf (stderr, "Попытка добавления дублированного элемента\n");
         return false;                                                           /*преждевременный возврат*/
     }
     new_node = MakeNode (pi);                                                   /*указывает на новый узел*/
@@ -72,6 +81,7 @@ bool AddItem ( Item * pi, Tree * ptree)
         return false;                                                           /*прежде временным возврат*/ 
     }
     /*новьм узел успешно создан*/
+    
     ptree -> size++;
     
     if (ptree -> root == NULL)                                                  /*случай 1: дерево пустое*/
@@ -82,15 +92,15 @@ bool AddItem ( Item * pi, Tree * ptree)
     return true;                                                                /*успешный возврат*/
 }
 
-bool InTree ( Item * pi,  Tree * ptree)
+bool InTree (const Item * pi, const Tree * ptree)
 {
-    return (SeekItem (pi, ptree, 0).child == NULL)? false: printf ("Слово: %-19s Количество: %-19d\n", ptree -> root -> item.petname, ptree -> root -> item.reps);
+    return (SeekItem (pi, ptree).child == NULL)? false: true;
 }
 
-bool DeleteItem ( Item * pi, Tree * ptree)
+bool DeleteItem (const Item * pi, Tree * ptree)
 {
     Pair look;
-    look = SeekItem (pi, ptree, 1);
+    look = SeekItem (pi, ptree);
     
     if (look.child == NULL)
         return false;
@@ -106,7 +116,7 @@ bool DeleteItem ( Item * pi, Tree * ptree)
     return true;
 }
 
-void Traverse ( Tree * ptree, void (* pfun) (Item item ))
+void Traverse (const Tree * ptree, void (* pfun) (Item item ))
 {
     if (ptree != NULL)
         InOrder (ptree -> root, pfun);
@@ -121,7 +131,7 @@ void DeleteAll (Tree * ptree)
 }
 
 /*локальные функции*/
-static void InOrder ( Node * root, void (* pfun) (Item item))
+static void InOrder (const Node * root, void (* pfun) (Item item))
 {
     if (root != NULL)
     {
@@ -153,7 +163,7 @@ static void AddNode (Node * new_node, Node * root)
         else
             AddNode (new_node, root -> left);                                   /*иначе выполняется обработка поддерева*/
     }
-    else if (ToRight (&new_node -> item, &root -> item, 0))
+    else if (ToRight (&new_node -> item, &root -> item))
     {
         if (root -> right == NULL)
             root -> right = new_node;
@@ -167,35 +177,31 @@ static void AddNode (Node * new_node, Node * root)
     }
 }
 
-static bool ToLeft (  Item * i1, Item * i2)
+static bool ToLeft (const  Item * i1, const Item * i2)
 {
-    int comp1, comp2;
+    int comp1;
     
-    //if ((comp2 = strcmp (i1 -> petname, i2 -> petname)) == 0)
-    //        i2 -> reps++;
     if ((comp1 = strcmp (i1 -> petname, i2 -> petname)) < 0)
-    {
-        return true;
-    }
+        return true; 
+    //else if (comp1 == 0 && strcmp (i1 -> petkind, i2 -> petkind) < 0)
+    //    return true;
     else 
         return false;
 }
 
-static bool ToRight ( Item * i1, Item * i2, int x)
+static bool ToRight (const Item * i1, const Item * i2)
 {
-    int comp1, comp2;
-    if (x == 1)
-        if ((comp2 = strcmp (i1 -> petname, i2 -> petname)) == 0)
-        {
-            i2 -> reps++;
-        }
+    int comp1;
+    
     if ((comp1 = strcmp (i1 -> petname, i2 -> petname)) > 0)
         return true;
+    //else if (comp1 == 0 && strcmp (i1 -> petkind, i2 -> petkind) > 0)
+    //    return true;
     else
         return false;
 }
 
-static Node * MakeNode ( Item * pi)
+static Node * MakeNode (const Item * pi)
 {
     Node * new_node;
     
@@ -210,12 +216,11 @@ static Node * MakeNode ( Item * pi)
     return new_node; 
 }
 
-static Pair SeekItem (Item * pi, Tree * ptree, int x)
+static Pair SeekItem (const Item * pi, const Tree * ptree)
 {
     Pair look;
     look.parent = NULL;
     look.child = ptree -> root;
-    int comp2;
     
     if (look.child == NULL)
         return look;                                                            /*преждевременный возврат*/
@@ -226,18 +231,13 @@ static Pair SeekItem (Item * pi, Tree * ptree, int x)
         {
             look.parent = look.child;
             look.child = look.child -> left;
-            //if ((comp2 = strcmp (pi -> petname, ptree -> root -> item.petname)) == 0)
-            //    pi -> reps++;
         }
-        else if (ToRight (pi, &(look.child -> item), x)) 
+        else if (ToRight (pi, &(look.child -> item))) 
         {
             look.parent = look.child;
             look.child = look.child -> right;
-            //if ((comp2 = strcmp (pi -> petname, ptree -> root -> item.petname)) == 0)
-            //    pi -> reps++;
         }
         else                                                                    /*если узел не является ни левым, ни правым, то должен совпадать с данным*/
-        
             break;                                                              /*look.child - адрес узла с элементом*/
     }
     return look;                                                                /*успешный возврат*/ 
@@ -273,4 +273,5 @@ static void DeleteNode (Node ** ptr)
         
         free (temp);
     }
+}
 }
