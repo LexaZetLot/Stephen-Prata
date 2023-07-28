@@ -1,6 +1,7 @@
 /*intconv.c -- некоторые несогласованные преобразования целочисленных типов */
 
 #include <stdio.h>
+
 #define PAGES 336
 #define WORDS 65618 
 

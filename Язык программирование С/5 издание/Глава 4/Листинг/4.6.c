@@ -11,7 +11,7 @@ int main(void)
     printf("%d администраторов выпили %f чашек кофе эспрессо.\n", number, espresso);
     printf("Значение pi равно %f.\n", PI);
     printf("Дo свидания! Ваше искусство слишком дорого мне обходится,\n");
-    printf( " %c%d\n", '$', 2 * cost);
+    printf("%c%d\n", '$', 2 * cost);
     
     return 0;
 }
