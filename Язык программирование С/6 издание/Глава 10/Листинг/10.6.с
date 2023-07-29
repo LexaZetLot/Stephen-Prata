@@ -1,0 +1,26 @@
+//bounds.c -- выход за границы массива
+
+#include <stdio.h>
+
+#define SIZE 4
+
+int main (void)
+{
+    int valuel = 44;
+    int arr [SIZE];
+    int value2 = 88;
+    int i;
+    
+    printf ("valuel = %d, value2 = %d\n", valuel, value2);
+    for (i = -1; i <= SIZE; i++) 
+        arr[i] = 2 * i + 1;
+    
+    for (i = -1; i < 7; i++)
+        printf("%2d %d\n", i, arr[i]);
+
+    printf("valuel = %d, value2 = %d\n", valuel, value2);
+    printf("адрес arr [-1]: %p\n", &arr[-1]);
+    printf("aдpec arr [4]: %p\n", &arr[4]);
+    printf("aдpec valuel: %p\n", &valuel);
+    printf("aдpec value2: %p\n", &value2);
+}

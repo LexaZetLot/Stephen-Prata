@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main (void)
+{
+    int frends = 5, i = 1, out = 0;
+    
+    while (frends <= 150)
+    {
+        printf ("Неделя %d вышло друзей %d друзей стало %d\n", i, out, frends);
+        out += i;
+        frends = (frends - i) * 2;
+    }
+    
+    return 0;
+}
