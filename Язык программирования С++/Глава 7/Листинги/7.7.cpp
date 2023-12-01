@@ -27,8 +27,6 @@ int main(void)
 		show_array(properties, size);
 	}
 	cout << "Done.\n";
-	cin.get();
-	cin.get();
 	return 0;
 }
 int fill_array(double ar[], int limit)
