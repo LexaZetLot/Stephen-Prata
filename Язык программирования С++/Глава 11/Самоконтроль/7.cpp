@@ -1,0 +1,4 @@
+operator double()
+{
+	return mag;
+}
