@@ -16,5 +16,4 @@ public:
 	void show_lbs() const;			// отображение веса в формате фунтов 
 	void show_stn() const;			// отображение веса в формате стоунов 
 };
-
 #endif

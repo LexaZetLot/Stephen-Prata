@@ -1,6 +1,5 @@
-// vect.cpp -- методы класса Vector
 #include <cmath>
-#include "vect.h"		// включает <iostream> 
+#include "function.h"	
 using std::sqrt;
 using std::sin;
 using std::cos;
@@ -9,12 +8,7 @@ using std::atan2;
 using std::cout;
 namespace VECTOR
 {
-	// Вычисляет количество градусов в одном радиане 
 	const double Rad_to_deg = 45.0 / atan(1.0);
-	// должно быть приблизительно равно 57.2 9577 95130823
-	//  
-	// Закрытые методы 
-	// Вычисляет модуль из х и у
 	void Vector::set_mag()
 	{
 		mag = sqrt(x * x + y * y);
@@ -26,27 +20,19 @@ namespace VECTOR
 		else
 			ang = atan2(y, x);
 	}
-	// Устанавливает х по полярным координатам 
 	void Vector::set_x()
 	{
 		x = mag * cos(ang);
 	}
-	// Устанавливает у по полярным координатам 
 	void Vector::set_y()
 	{
 		y = mag * sin(ang);
 	}
-
-
-
-	// Открытые методы 
-	Vector::Vector() // конструктор по умолчанию 
+	Vector::Vector()
 	{
 		x = y = mag = ang = 0.0;
 		mode = RECT;
 	}
-	// Конструирует вектор по прямоугольным координатам, если form равно RECT 
-	// (по умолчанию) , или по полярным координатам, если form равно POL 
 	Vector::Vector(double n1, double n2, Mode form)
 	{
 		mode = form;
@@ -66,7 +52,6 @@ namespace VECTOR
 		}
 		else
 		{
-			// Некорректный третий аргумент Vector(); вектор устанавливается в О 
 			cout << "Incorrect 3rd argument to Vector () -- ";
 			cout << "vector set to 0\n";
 			x = y = mag = ang = 0.0;
@@ -74,8 +59,6 @@ namespace VECTOR
 		}
 
 	}
-	// Устанавливает вектор по прямоугольным координатам, если form равно RECT 
-	// (по умолчанию) , или по полярным координатам, если если form равно POL 
 	void Vector::reset(double n1, double n2, Mode form)
 	{
 		mode = form;
@@ -101,46 +84,37 @@ namespace VECTOR
 			mode = RECT;
 		}
 	}
-	Vector::~Vector()			// деструктор 
+	Vector::~Vector()
 	{
 	}
-	void Vector::polar_mode()	// устанавливает режим полярных координат 
+	void Vector::polar_mode()
 	{
 		mode = POL;
 	}
-	void Vector::rect_mode()	// устанавливает режим прямоугольных координат 
+	void Vector::rect_mode()
 	{
 		mode = RECT;
 	}
-	// Перегрузка операций 
-	// Сложение двух векторов 
 	Vector Vector::operator+(const Vector& b) const
 	{
 		return Vector(x + b.x, y + b.y);
 	}
-	// Вычитание вектора b из а 
 	Vector Vector::operator-(const Vector& b) const
 	{
 		return Vector(x - b.x, y - b.y);
 	}
-	// Смена знака вектора на противоположный 
 	Vector Vector::operator-() const
 	{
 		return Vector(-x, -y);
 	}
-	// Умножение вектора на n 
 	Vector Vector::operator*(double n) const
 	{
 		return Vector(n * x, n * y);
 	}
-	// Дружественные методы 
-	// Умножение п на вектор а • 
 	Vector operator*(double n, const Vector& a)
 	{
 		return a * n;
 	}
-	// Отображает прямоугольные координаты, если mode равно RECT, 
-	// или отображает полярные координаты, если mode равно POL 
 	std::ostream& operator<<(std::ostream& os, const Vector& v)
 	{
 		if (v.mode == Vector::RECT)
@@ -151,7 +125,7 @@ namespace VECTOR
 				<< v.ang * Rad_to_deg << " ) ";
 		}
 		else
-			os << "Vector object mode is invalid"; // недопустимый режим объекта Vector 
+			os << "Vector object mode is invalid";
 		return os;
 	}
-} // конец пространства имен VECTOR 
+}
