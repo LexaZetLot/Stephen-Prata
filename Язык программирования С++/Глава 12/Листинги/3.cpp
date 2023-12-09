@@ -3,7 +3,7 @@
 #include <iostream> 
 using std::cout;
 #include "strngbad.h"
-void callmel(StringBad&);		// передача по ссылке 
+void callme1(StringBad&);		// передача по ссылке 
 void callme2(StringBad);		// передача по значению 
 int main(void)
 {
@@ -16,7 +16,7 @@ int main(void)
 		cout << "headlinel: " << headline1 << endl;
 		cout << "headline2: " << headline2 << endl;
 		cout << "sports: " << sports << endl;
-		callmel(headline1);
+		callme1(headline1);
 		cout << "headlinel: " << headline1 << endl;
 		callme2(headline2);
 		cout << "headline2: " << headline2 << endl;
@@ -32,7 +32,7 @@ int main(void)
 	cout << "End of main()\n";
 	return 0;
 }
-void callmel(StringBad& rsb)
+void callme1(StringBad& rsb)
 {
 	cout << "String passed by reference:\n";	// строка, переданная по ссылке 
 	cout << " \"" << rsb << "\"\n";
