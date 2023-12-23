@@ -1,4 +1,4 @@
-//  strgst1.cpp -- применение STL к строке
+// strgst1.cpp -- применение STL к строке
 #include <iostream>
 #include <list>
 #include <algorithm>
