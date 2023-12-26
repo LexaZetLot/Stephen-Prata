@@ -1,6 +1,5 @@
 #include "function.h" 
 
-
 int main(void)
 {
 	employee em("Trip", "Harris", "Thumper");
